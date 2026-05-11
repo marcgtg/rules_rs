@@ -136,6 +136,7 @@ bzl_library(
     srcs = ["clippy_repository.bzl"],
     visibility = ["//rs:__subpackages__"],
     deps = [
+        ":symlink_utils",
         "@rules_rust//rust/platform:bzl_lib",
         "@rules_rust//rust/private:bzl_lib",
     ],
@@ -146,6 +147,7 @@ bzl_library(
     srcs = ["rustfmt_repository.bzl"],
     visibility = ["//rs:__subpackages__"],
     deps = [
+        ":symlink_utils",
         "//rs/private:rust_repository_utils",
         "@rules_rust//rust/platform:bzl_lib",
         "@rules_rust//rust/private:bzl_lib",
