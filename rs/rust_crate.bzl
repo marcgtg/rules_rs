@@ -158,7 +158,7 @@ def rust_crate(
         )
         native.alias(
             name = name,
-            actual = ":" + stub_name,
+            actual = stub_name,
             tags = crate_tags,
             visibility = ["//visibility:public"],
         )

@@ -633,6 +633,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "apriltag"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e3278ce87faf6559bf159b5d5920de622f39dfe7c035387a6e70854e3dfcfa55"
+dependencies = [
+ "apriltag-sys",
+ "libc",
+ "measurements",
+ "noisy_float",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "apriltag-sys"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "168f741d3e5f434b54fa6fa857e35093b631900addbb3fb452715a2a67cd14c2"
+dependencies = [
+ "anyhow",
+ "cc",
+ "cmake",
+ "glob",
+ "itertools 0.10.5",
+ "once_cell",
+ "pkg-config",
+]
+
+[[package]]
 name = "ar_archive_writer"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10597,6 +10625,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "measurements"
+version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f72b38901c571007811f0483e64a7e215ac9e6e3688e9f83705a717621d81513"
+dependencies = [
+ "libm",
+]
+
+[[package]]
 name = "meilisearch-index-setting-macro"
 version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -11034,6 +11071,15 @@ name = "no-std-compat"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b93853da6d84c2e3c7d730d6473e8817692dd89be387eb01b94d7f108ecb5b8c"
+
+[[package]]
+name = "noisy_float"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c16843be85dd410c6a12251c4eca0dd1d3ee8c5725f746c4d5e0fdcec0a864b2"
+dependencies = [
+ "num-traits",
+]
 
 [[package]]
 name = "nom"
@@ -19164,6 +19210,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "apple-codesign",
+ "apriltag",
  "axum 0.8.8",
  "ballista",
  "bindgen",

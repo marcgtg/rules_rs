@@ -20,7 +20,6 @@ cc_library(
 )""",
     crate = "apriltag-sys",
     gen_build_script = "off",
-    repositories = ["crates"],
     deps = [
         ":apriltags",
     ],
