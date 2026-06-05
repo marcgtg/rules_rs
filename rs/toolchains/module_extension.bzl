@@ -9,6 +9,7 @@ load(
 )
 load("//rs/experimental/miri/private:miri_repository.bzl", "miri_repository")
 load("//rs/platforms:triples.bzl", "SUPPORTED_EXEC_TRIPLES", "SUPPORTED_TIER_1_AND_2_TRIPLES")
+load("//rs/private:bpf_linker_repository.bzl", "BPF_LINKER_SUPPORTED_EXEC_TRIPLES", "declare_bpf_linker_repository")
 load("//rs/private:cargo_repository.bzl", "cargo_repository")
 load("//rs/private:clippy_repository.bzl", "clippy_repository")
 load("//rs/private:host_tools_repository.bzl", "host_tools_repository")
@@ -204,6 +205,9 @@ def _toolchains_impl(mctx):
                 miri_versions.add(tag.version)
 
     rust_versions = versions | miri_versions
+
+    for triple in BPF_LINKER_SUPPORTED_EXEC_TRIPLES:
+        declare_bpf_linker_repository(triple)
 
     existing_facts = getattr(mctx, "facts", {}) or {}
     pending_downloads = {}

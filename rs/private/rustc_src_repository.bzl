@@ -265,9 +265,14 @@ source_stdlib(
         "alloc",
         "compiler_builtins",
         "core",
-        "panic_abort",
-        "std",
-    ],
+    ] + select({
+        "@rules_rs//rs/platforms/config:bpfeb-unknown-none": [],
+        "@rules_rs//rs/platforms/config:bpfel-unknown-none": [],
+        "//conditions:default": [
+            "panic_abort",
+            "std",
+        ],
+    }),
 )
 """,
     ]

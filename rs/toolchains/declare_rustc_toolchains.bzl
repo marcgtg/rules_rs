@@ -1,7 +1,13 @@
 load("@rules_rust//rust:toolchain.bzl", "rust_toolchain")
 load("@rules_rust//rust/platform:triple.bzl", _parse_triple = "triple")
 load("//rs/platforms:triples.bzl", "ALL_TARGET_TRIPLES", "SUPPORTED_EXEC_TRIPLES", "SUPPORTED_TIER_3_TRIPLES", "triple_to_rust_constraint_set")
+load("//rs/private:bpf_linker_repository.bzl", "bpf_linker_repository_name")
 load("//rs/toolchains:toolchain_utils.bzl", "sanitize_triple", "sanitize_version")
+
+_BPF_TARGET_TRIPLES = [
+    "bpfeb-unknown-none",
+    "bpfel-unknown-none",
+]
 
 def _channel(version):
     if version.startswith("nightly"):
@@ -170,7 +176,29 @@ def declare_rustc_toolchains(
             **rust_toolchain_kwargs
         )
 
+        # FIXME: bpf_linker_repository_name returns None for Windows until
+        # bpf-linker publishes Windows prebuilts.
+        bpf_linker_repo = bpf_linker_repository_name(triple)
+        if bpf_linker_repo:
+            bpf_rust_toolchain_kwargs = rust_toolchain_kwargs | {
+                "linker": select({
+                    "@platforms//cpu:bpfeb": "@{}//:bpf-linker".format(bpf_linker_repo),
+                    "@platforms//cpu:bpfel": "@{}//:bpf-linker".format(bpf_linker_repo),
+                }),
+            }
+
+            rust_toolchain(
+                name = rust_toolchain_name + "_bpf",
+                linker_preference = "rust",
+                process_wrapper = "@rules_rust//util/process_wrapper",
+                rust_std = toolchain_rust_std,
+                **bpf_rust_toolchain_kwargs
+            )
+
         for target_triple in targets:
+            if target_triple in _BPF_TARGET_TRIPLES and not bpf_linker_repo:
+                continue
+
             target_key = sanitize_triple(target_triple)
 
             native.toolchain(
@@ -184,10 +212,13 @@ def declare_rustc_toolchains(
                     "@rules_rust//rust/private:bootstrapped",
                     "@rules_rust//rust/toolchain/channel:" + channel,
                 ],
-                toolchain = rust_toolchain_name,
+                toolchain = rust_toolchain_name + ("_bpf" if target_triple in _BPF_TARGET_TRIPLES else ""),
                 toolchain_type = "@rules_rust//rust:toolchain_type",
                 visibility = ["//visibility:public"],
             )
+
+            if target_triple not in SUPPORTED_EXEC_TRIPLES:
+                continue
 
             native.toolchain(
                 name = "{}_{}_to_{}_{}_bootstrap".format(exec_triple.system, exec_triple.arch, target_key, version_key),

@@ -8,6 +8,7 @@ bzl_library(
     deps = [
         ":toolchain_utils",
         "//rs/platforms:triples",
+        "//rs/private:bpf_linker_repository",
         "@rules_rust//rust:bzl_lib",
         "@rules_rust//rust/platform:bzl_lib",
     ],
@@ -43,6 +44,7 @@ bzl_library(
         ":toolchain_utils",
         "//rs/experimental/miri/private:miri_repository",
         "//rs/platforms:triples",
+        "//rs/private:bpf_linker_repository",
         "//rs/private:cargo_repository",
         "//rs/private:clippy_repository",
         "//rs/private:host_tools_repository",
