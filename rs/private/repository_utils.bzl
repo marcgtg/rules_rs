@@ -184,6 +184,7 @@ _RUST_CRATE_MACRO_CALL = """{indent}rust_crate(
 {indent}        {build_deps}
 {indent}    ]{conditional_build_deps},
 {indent}    build_script_env = {build_script_env}{conditional_build_script_env},
+{indent}    allow_build_script_to_detect_nonhermetic_paths = {allow_build_script_to_detect_nonhermetic_paths},
 {indent}    build_script_toolchains = {build_script_toolchains},
 {indent}    build_script_tools = {build_script_tools}{conditional_build_script_tools},
 {indent}    build_script_tags = {build_script_tags},
@@ -255,6 +256,7 @@ def render_rust_crate_call(attr, values, bazel_metadata = {}, extra_deps = "", i
         conditional_build_deps = " + " + conditional_build_deps if conditional_build_deps else "",
         build_script_env = repr(attr.build_script_env),
         conditional_build_script_env = " | " + conditional_build_script_env if conditional_build_script_env else "",
+        allow_build_script_to_detect_nonhermetic_paths = repr(attr.allow_build_script_to_detect_nonhermetic_paths),
         build_script_toolchains = repr([str(t) for t in attr.build_script_toolchains]),
         build_script_tools = repr([str(t) for t in build_script_tools]),
         conditional_build_script_tools = " + " + conditional_build_script_tools if conditional_build_script_tools else "",
@@ -292,6 +294,7 @@ rust_crate_attrs = {
     "build_script_data_select": attr.string_list_dict(),
     "build_script_env": attr.string_dict(),
     "build_script_env_select": attr.string_dict(),
+    "allow_build_script_to_detect_nonhermetic_paths": attr.bool(default = False),
     "build_script_toolchains": attr.label_list(),
     "build_script_tools": attr.label_list(default = []),
     "build_script_tools_select": attr.string_list_dict(),

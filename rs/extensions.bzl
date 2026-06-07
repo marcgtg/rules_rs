@@ -323,6 +323,7 @@ crate.annotation(
             build_script_data = annotation.build_script_data,
             build_script_data_select = annotation.build_script_data_select,
             build_script_env = annotation.build_script_env,
+            allow_build_script_to_detect_nonhermetic_paths = annotation.allow_build_script_to_detect_nonhermetic_paths,
             build_script_toolchains = annotation.build_script_toolchains,
             build_script_tools = annotation.build_script_tools,
             build_script_tags = annotation.build_script_tags,
@@ -884,6 +885,10 @@ _annotation = tag_class(
         ),
         "build_script_env_select": attr.string_dict(
             doc = "Additional environment variables to set on a crate's `cargo_build_script::env` attribute. Key should be the platform triplet. Value should be a JSON encoded dictionary mapping variable names to values, for example `{\"FOO\": \"bar\"}`.",
+        ),
+        "allow_build_script_to_detect_nonhermetic_paths": attr.bool(
+            default = False,
+            doc = "Allow this crate's build script to emit absolute host-system paths in rustc-link-search, rustc-env, or metadata directives.",
         ),
         # "build_script_link_deps": _relative_label_list(
         #     doc = "A list of labels to add to a crate's `cargo_build_script::link_deps` attribute.",
