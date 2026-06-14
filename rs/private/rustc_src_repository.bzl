@@ -116,6 +116,7 @@ def _crate_attr(
         deps_select,
         extra_compile_data):
     return struct(
+        allow_build_script_to_detect_nonhermetic_paths = False,
         aliases = aliases,
         build_script_data = [],
         build_script_data_select = {},

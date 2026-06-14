@@ -48,6 +48,8 @@ rust_binary(
     ],
     edition = "2021",
     rustc_env = {
+        "CARGO_PKG_AUTHORS": "",
+        "CARGO_PKG_VERSION": "0.0.0",
         "RUST_ANALYZER_RLOCATIONPATH": "$(RUST_ANALYZER_RLOCATIONPATH)",
     },
     toolchains = ["@rules_rust//rust/toolchain:current_rust_analyzer_toolchain"],

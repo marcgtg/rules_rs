@@ -236,6 +236,16 @@ crate.annotation(
     workspace_cargo_toml = "tokenizers/Cargo.toml",
 )
 crate.annotation(
+    allow_build_script_to_detect_nonhermetic_paths = True,
+    crate = "crunchy",
+    version = "0.2.4",
+)
+crate.annotation(
+    allow_build_script_to_detect_nonhermetic_paths = True,
+    crate = "av-scenechange",
+    version = "0.14.1",
+)
+crate.annotation(
     crate = "member_foo",
     crate_features = ["json"],
     repositories = ["workspace_member_annotation_features"],
@@ -337,6 +347,7 @@ inject_repo(crate, "aws-lc")
 include("//:3rd_party/tikv-jemalloc-sys/include.MODULE.bazel")
 
 crate.annotation(
+    allow_build_script_to_detect_nonhermetic_paths = True,
     build_script_env = {
         "NASM": "$(execpath @nasm//:nasm)",
     },

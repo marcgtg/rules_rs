@@ -7,6 +7,10 @@ rust_shared_library(
     srcs = ["wasm_bindgen_smoke.rs"],
     crate_name = "wasm_bindgen_smoke",
     edition = "2021",
+    rustc_env = {
+        "CARGO_PKG_NAME": "wasm_bindgen_smoke",
+        "CARGO_PKG_VERSION": "0.0.0",
+    },
     target_compatible_with = ["@platforms//cpu:wasm32"],
     deps = [
         "@rules_rs//rs/private/wasm_bindgen",
